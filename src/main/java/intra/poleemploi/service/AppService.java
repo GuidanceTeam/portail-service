@@ -14,7 +14,7 @@ public interface AppService {
     //public ContentAppli saveContentAppli(ContentAppli contentAppli);
 
     // ajouter un content à une coachedAppli
-    public void addContentToAppli(String appliName, String contentName);
+    // public void addContentToAppli(String appliName, String contentName);
 
     // supprimer les données
     //public void deleteCoachedAppli();
