@@ -11,9 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Stream;
+
 
 @SpringBootApplication
 public class PortailServiceApplication {
@@ -29,9 +27,9 @@ public class PortailServiceApplication {
 			// supprime les données coachedAppli avant chaque lancement de l'appli
 			coachedAppliRepository.deleteAll();
 			// save les données coachedAppli en BDD
-			coachedAppliRepository.save(new CoachedAppli(1, "APP01", "Profil de compétences", new HashSet<>()));
-			coachedAppliRepository.save(new CoachedAppli(2, "APP02", "MRS Digitale", new HashSet<>()));
-			coachedAppliRepository.save(new CoachedAppli(3, "APP03", "MAP DE", new HashSet<>()));
+			coachedAppliRepository.save(new CoachedAppli(1, "APP01", "Profil de compétences", new ArrayList<>()));
+			coachedAppliRepository.save(new CoachedAppli(2, "APP02", "MRS Digitale", new ArrayList<>()));
+			coachedAppliRepository.save(new CoachedAppli(3, "APP03", "MAP DE", new ArrayList<>()));
 			// parcourt et affiche les données
 			coachedAppliRepository.findAll().forEach(System.out::println);
 			// supprime les données contentAppli avant chaque lancement de l'appli
