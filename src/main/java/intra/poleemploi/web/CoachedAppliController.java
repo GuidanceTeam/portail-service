@@ -1,8 +1,11 @@
+
 package intra.poleemploi.web;
 
 import intra.poleemploi.dao.CoachedAppliRepository;
 import intra.poleemploi.entities.CoachedAppli;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +22,10 @@ public class CoachedAppliController {
     }
 
     @GetMapping(value = "/applis/{id}")
-    public CoachedAppli coachedAppliById(@PathVariable(name = "id") Integer id){
-        return coachedAppliRepository.findById(id).get();
+    public ResponseEntity<CoachedAppli> getCoachedAppliById(@PathVariable(value = "id") Integer idAppli) throws ResourceNotFoundException {
+        CoachedAppli coachedAppli = coachedAppliRepository.findById(idAppli)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found for this id :: " + idAppli));
+        return ResponseEntity.ok().body(coachedAppli);
     }
 
     @PutMapping(value = "/applis/{id}")
@@ -39,3 +44,4 @@ public class CoachedAppliController {
         coachedAppliRepository.deleteById(id);
     }
 }
+
