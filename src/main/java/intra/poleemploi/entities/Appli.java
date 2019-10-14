@@ -18,9 +18,10 @@ public class Appli implements Serializable {
     private String idAppliKM;
     @Column(unique = true)
     private String appliName;
-    //@ManyToMany(fetch = FetchType.EAGER)
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "appli", orphanRemoval = true)
     private Collection<Content> contents = new ArrayList<>();
+    @ManyToMany
+    private Collection<UserApp> users = new ArrayList<>();
 
     @Override
     public String toString() {
