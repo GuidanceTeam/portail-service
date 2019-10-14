@@ -1,71 +1,62 @@
 package intra.poleemploi.service;
 
-import intra.poleemploi.dao.CoachedAppliRepository;
-import intra.poleemploi.dao.ContentAppliRepository;
-import intra.poleemploi.entities.CoachedAppli;
-import intra.poleemploi.entities.ContentAppli;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
 
 //@Service
 //@Transactional
 //public class AppServiceImpl implements AppService {
     // interfaces DAO
-//    private CoachedAppliRepository coachedAppliRepository;
-//    private ContentAppliRepository contentAppliRepository;
+//    private AppliRepository appliRepository;
+//    private ContentRepository contentRepository;
 
     // Injection des dépendances
-//    public AppServiceImpl(CoachedAppliRepository coachedAppliRepository, ContentAppliRepository contentAppliRepository) {
-//        this.coachedAppliRepository = coachedAppliRepository;
-//        this.contentAppliRepository = contentAppliRepository;
+//    public AppServiceImpl(AppliRepository appliRepository, ContentRepository contentRepository) {
+//        this.appliRepository = appliRepository;
+//        this.contentRepository = contentRepository;
 //    }
 //
 //    @Override
-//    public CoachedAppli saveCoachedAppli(String appliName) {
-//        CoachedAppli appli = coachedAppliRepository.findCoachedAppliByAppliName(appliName);
-//        if(appli != null) throw new RuntimeException("coachedAppli already exist !!!");
-//        CoachedAppli coachedAppli = new CoachedAppli();
-//        coachedAppli.setAppliName(appliName);
+//    public Appli saveAppli(String appliName) {
+//        Appli appli = appliRepository.findAppliByAppliName(appliName);
+//        if(appli != null) throw new RuntimeException("Appli already exist !!!");
+//        Appli appli = new Appli();
+//        appli.setAppliName(appliName);
 //
-//        coachedAppliRepository.save(coachedAppli);
+//        appliRepository.save(appli);
 //        //addContentToAppli(appliName, "Pastille");
-//        return coachedAppli;
+//        return appli;
 //    }
 
 //    @Override
-//    public ContentAppli saveContentAppli(ContentAppli contentAppli) {
-//        return contentAppliRepository.save(contentAppli);
+//    public Content saveContent(Content content) {
+//        return contentRepository.save(content);
 //    }
 //
 //    @Override
 //    public void addContentToAppli(String appliName, String contentName) {
-//        CoachedAppli coachedAppli = coachedAppliRepository.findCoachedAppliByAppliName(appliName);
-//        ContentAppli contentAppli = contentAppliRepository.findContentAppliByContentName(contentName);
-//        coachedAppli.getContents().add(contentAppli);
+//        Appli appli = appliRepository.findAppliByAppliName(appliName);
+//        Content content = contentRepository.findContentByContentName(contentName);
+//        appli.getContents().add(content);
 //    }
 //
 //    @Override
-//    public List<CoachedAppli> findAllCoachedAppli() {
-//        return coachedAppliRepository.findAll();
+//    public List<Appli> findAllAppli() {
+//        return appliRepository.findAll();
 //    }
 
 //    @Override
-//    public CoachedAppli findCoachedAppliById(int id) {
+//    public Appli findAppliById(int id) {
 //        return null;
 //    }
 
 //    @Override
-//    public void deleteCoachedAppli() {
-//        coachedAppliRepository.deleteAll();
+//    public void deleteAppli() {
+//        appliRepository.deleteAll();
 //    }
 
 //    @Override
 //    @GetMapping(value="/listApplis")
-//    public List<CoachedAppli> getListCoachedAppli() {
-//        return coachedAppliRepository.findAll();
+//    public List<Appli> getListAppli() {
+//        return appliRepository.findAll();
 //    }
 
 //}
