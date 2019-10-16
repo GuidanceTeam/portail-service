@@ -2,9 +2,11 @@ package intra.poleemploi;
 
 import intra.poleemploi.dao.AppliRepository;
 import intra.poleemploi.dao.ContentRepository;
+import intra.poleemploi.dao.UserAppRepository;
 import intra.poleemploi.entities.Appli;
 import intra.poleemploi.entities.Content;
 import intra.poleemploi.entities.RoleApp;
+import intra.poleemploi.entities.UserApp;
 import intra.poleemploi.service.AuthService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,10 @@ public class PortailServiceApplication {
 	}
 
 	@Bean
-	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService){
+	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository){
 		return args -> {
-
-			// supprime les données coachedAppli avant chaque lancement de l'appli
+			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
+			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
 			appliRepository.deleteAll();
 			// save les données coachedAppli en BDD
 			appliRepository.save(new Appli(1, "APP01", "Profil de compétences", new ArrayList<>(), new ArrayList<>()));
@@ -70,6 +72,12 @@ public class PortailServiceApplication {
 
 			// ajout role ADMIN a l'admin
 			authService.addRoleToUser("admin", "ADMIN");
+
+			authService.addAppliToUser("user1", "profil de compétences");
+			authService.addAppliToUser("user1", "MAP DE");
+			authService.addAppliToUser("user2", "MRS Digitale");
+
+			userAppRepository.findAll().forEach(System.out::println);
 		};
 	}
 	// créer BCryptPasswordEncoder au démarrage de l'appli pour injection dans couche Service
