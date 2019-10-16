@@ -7,6 +7,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
@@ -20,7 +22,7 @@ public class UserController {
         return authService.saveUserApp(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
 
-    @GetMapping(value = "/profile/{username}")
+    @GetMapping(value = "/adminUsers/{username}")
     public UserApp userAppByUsername(@PathVariable(name="username") String username){
         return userAppRepository.findUserByUsername(username);
     };
