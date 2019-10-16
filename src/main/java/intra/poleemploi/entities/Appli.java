@@ -20,7 +20,7 @@ public class Appli implements Serializable {
     private String appliName;
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "appli", orphanRemoval = true)
     private Collection<Content> contents = new ArrayList<>();
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<UserApp> users = new ArrayList<>();
 
     @Override

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ public class UserApp {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean activated;
-    @ManyToMany//(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<RoleApp> roles = new ArrayList<>();
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Appli> applis = new ArrayList<>();
 }
