@@ -1,13 +1,17 @@
 package intra.poleemploi.service;
 
+import intra.poleemploi.dao.AppliRepository;
 import intra.poleemploi.dao.RoleAppRepository;
 import intra.poleemploi.dao.UserAppRepository;
+import intra.poleemploi.entities.Appli;
 import intra.poleemploi.entities.RoleApp;
 import intra.poleemploi.entities.UserApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,6 +20,8 @@ public class AuthServiceImpl implements AuthService {
     private UserAppRepository userAppRepository;
     @Autowired
     private RoleAppRepository roleAppRepository;
+    @Autowired
+    private AppliRepository appliRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -56,4 +62,13 @@ public class AuthServiceImpl implements AuthService {
         // ajout role à user
         userApp.getRoles().add(roleApp);
     }
+
+    @Override
+    public void addAppliToUser(String username, String appliName) {
+        UserApp userApp = userAppRepository.findUserByUsername(username);
+        Appli appli = appliRepository.findAppliByAppliName(appliName);
+        userApp.getApplis().add(appli);
+    }
+
+
 }
