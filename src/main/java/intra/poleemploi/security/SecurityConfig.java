@@ -35,8 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/login/**", "/register/**").permitAll();
-        // ***** A ENLEVER POUR LA PROD >> IL FAUT ETRE ADMIN POUR AVOIR LISTE DES USERS ***** //
+        // ***** A ENLEVER POUR LA PROD >> IL FAUT ETRE ADMIN POUR AVOIR LISTE DES USERS et ROLES ***** //
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/userApps/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/roleApps/**").permitAll();
         http.authorizeRequests().antMatchers("/userApps/**", "/roleApps/**").hasAuthority("ADMIN");
 
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/applis/**").permitAll();
