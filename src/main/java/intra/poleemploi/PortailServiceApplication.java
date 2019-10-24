@@ -80,10 +80,13 @@ public class PortailServiceApplication {
 			userAppRepository.findAll().forEach(System.out::println);
 		};
 	}
+
+
 	// créer BCryptPasswordEncoder au démarrage de l'appli pour injection dans couche Service
 	@Bean
 	BCryptPasswordEncoder getBCPE() {
 		return new BCryptPasswordEncoder();
 	}
+
 }
 

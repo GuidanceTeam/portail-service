@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 @Table(name="role")
-public class RoleApp {
+public classRoleApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

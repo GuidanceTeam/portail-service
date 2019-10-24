@@ -22,6 +22,8 @@ public class Appli implements Serializable {
     private Collection<Content> contents = new ArrayList<>();
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<UserApp> users = new ArrayList<>();
+    @Column(name="AppliURL")
+    private String appliURL;
 
     @Override
     public String toString() {
