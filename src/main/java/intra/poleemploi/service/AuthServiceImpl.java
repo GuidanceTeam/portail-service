@@ -25,6 +25,8 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private List<UserApp> listUsers;
+
     @Override
     public UserApp saveUserApp(String username, String password, String confirmedPassword) {
         UserApp user = userAppRepository.findUserByUsername(username);
@@ -41,6 +43,12 @@ public class AuthServiceImpl implements AuthService {
         userApp.setActivated(true);
         // attribue role par défaut à user
         addRoleToUser(username, "USER");
+        return userApp;
+    }
+
+    @Override
+    public UserApp saveUserApp(UserApp userApp) {
+        userAppRepository.save(userApp);
         return userApp;
     }
 
@@ -69,6 +77,6 @@ public class AuthServiceImpl implements AuthService {
         Appli appli = appliRepository.findAppliByAppliName(appliName);
         userApp.getApplis().add(appli);
     }
-
+    
 
 }
