@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @Transactional
@@ -24,8 +23,6 @@ public class AuthServiceImpl implements AuthService {
     private AppliRepository appliRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private List<UserApp> listUsers;
 
     @Override
     public UserApp saveUserApp(String username, String password, String confirmedPassword) {
@@ -77,6 +74,6 @@ public class AuthServiceImpl implements AuthService {
         Appli appli = appliRepository.findAppliByAppliName(appliName);
         userApp.getApplis().add(appli);
     }
-    
+
 
 }
