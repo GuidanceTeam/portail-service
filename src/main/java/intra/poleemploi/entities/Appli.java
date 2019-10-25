@@ -18,17 +18,12 @@ public class Appli implements Serializable {
     private String idAppliKM;
     @Column(unique = true)
     private String appliName;
-    private String URL;
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "appli", orphanRemoval = true)
     private Collection<Content> contents = new ArrayList<>();
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<UserApp> users = new ArrayList<>();
-
-    public <E> Appli(int i, String app01, String profil_de_compétences) {
-        this.id = i;
-        this.idAppliKM = app01;
-        this.appliName = profil_de_compétences;
-    }
+    @Column(name="AppliURL")
+    private String appliURL;
 
     @Override
     public String toString() {
@@ -36,7 +31,6 @@ public class Appli implements Serializable {
                 "id=" + id +
                 ", idAppliKM='" + idAppliKM + '\'' +
                 ", appliName='" + appliName + '\'' +
-                ", URL  ='" + URL + '\'' +
                 '}';
     }
 }
