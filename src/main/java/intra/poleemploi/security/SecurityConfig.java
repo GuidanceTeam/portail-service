@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/login/**", "/register/**").permitAll();
+        // ***** A ENLEVER POUR LA PROD >> IL FAUT ETRE ADMIN POUR MODIFIER LES ROLES ET LES APPLIS DE USER ***** //
+        http.authorizeRequests().antMatchers("/login/**", "/adminUsers/**", "/updateUserRoles/**").permitAll();
         // ***** A ENLEVER POUR LA PROD >> IL FAUT ETRE ADMIN POUR AVOIR LISTE DES USERS et ROLES ***** //
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/userApps/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/roleApps/**").permitAll();
