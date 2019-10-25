@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
@@ -16,15 +17,17 @@ public class Content implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String contentName;
-    //private boolean published;
-    //private String description;
-    //private int nbLectures;
-    //private int nbUsers;
-    //private double displayDuration;
-    //private Date date;
+    private boolean published;
+    private String description;
+    @Column(name="NbLectures")
+    private int nbLectures;
+    @Column(name="NbAffichages")
+    private int nbAffichages;
+    private String icone;
+    private String contentURL;
+    private Date debut;
+    private Date fin;
     @ManyToOne
     @JoinColumn(name = "id_appli", nullable = false)
     private Appli appli;
-
-
 }
