@@ -8,6 +8,7 @@ import intra.poleemploi.entities.Content;
 import intra.poleemploi.entities.RoleApp;
 import intra.poleemploi.entities.UserApp;
 import intra.poleemploi.service.AuthService;
+import intra.poleemploi.utility.ReadExcel;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +19,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -38,28 +40,48 @@ public class PortailServiceApplication {
 			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
 			appliRepository.deleteAll();
 			// save les données coachedAppli en BDD
-			appliRepository.save(new Appli(1, "APP01", "Profil de compétences", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(2, "APP02", "MRS Digitale", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(3, "APP03", "MAP DE", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(4, "APP04", "AUDE Presta", new ArrayList<>(), new ArrayList<>()));
-			// parcourt et affiche les données
+//			appliRepository.save(new Appli(1, "APP01", "Profil de compétences"));
+//			appliRepository.save(new Appli(2, "APP02", "MRS Digitale"));
+//			appliRepository.save(new Appli(3, "APP03", "MAP DE"));
+//			appliRepository.save(new Appli(4, "APP04", "AUDE Presta"));
+
+			List<Appli> listAppli = new ArrayList<>();
+			ReadExcel readListAppli = new ReadExcel();
+			listAppli = readListAppli.getAppliList("C:/demo/KnowMore/knowMore CoachedAppli.xlsx");
+
+			for (Appli tempAppli : listAppli) {
+				if (tempAppli.getIdAppliKM() != "id")  {
+					appliRepository.save(tempAppli);
+				}
+			}
+
+		    // parcourt et affiche les données
 			appliRepository.findAll().forEach(System.out::println);
 			// supprime les données contentAppli avant chaque lancement de l'appli
-			// contentRepository.deleteAll();
+			contentRepository.deleteAll();
+            List<Content> listContent = new ArrayList<>();
+			listAppli = readListAppli.getAppliList("C:/demo/KnowMore/knowMore ContentAppli.xlsx");
 
-			Random rnd = new Random();
-			appliRepository.findAll().forEach(appli -> {
-				for (int i = 0; i < 5; i++) {
-					Content cnt = new Content();
-					cnt.setId(rnd.nextInt());
-					cnt.setContentName(RandomString.make(7));
-					cnt.setAppli(appli);
-					contentRepository.save(cnt);
+			for (Appli tempAppli : listAppli) {
+				if (tempAppli. != "id")  {
+					appliRepository.save(tempAppli);
 				}
-			});
-			contentRepository.findAll().forEach(cnt -> {
-				System.out.println(cnt.toString());
-			});
+			}
+
+
+//			Random rnd = new Random();
+//			appliRepository.findAll().forEach(appli -> {
+//				for (int i = 0; i < 5; i++) {
+//					Content cnt = new Content();
+//					cnt.setId(rnd.nextInt());
+//					cnt.setContentName(RandomString.make(7));
+//					cnt.setAppli(appli);
+//					contentRepository.save(cnt);
+//				}
+//			});
+//			contentRepository.findAll().forEach(cnt -> {
+//				System.out.println(cnt.toString());
+//			});
 
 			// AUTHENTICATION
 			// ajout de 2 roles
