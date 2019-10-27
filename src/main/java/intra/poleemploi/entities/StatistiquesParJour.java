@@ -27,8 +27,8 @@ public class StatistiquesParJour implements Serializable {
     private Long nbUsersAyantLusLaPastille;
     @Column(name="TempsPasseSurLaPastilleMS")
     private Long tempsPasseSurLaPastilleMS;
-    @Column(name="Appli")
-    private Appli appli;
+    @Column(name="Content")
+    private Content content;
 }
 
 

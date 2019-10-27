@@ -4,5 +4,5 @@ import intra.poleemploi.entities.RoleApp;
 import intra.poleemploi.entities.StatistiquesParJour;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SatistiquesParJourRepository extends JpaRepository<StatistiquesParJour, Long> {
+public interface StatistiquesParJourRepository extends JpaRepository<StatistiquesParJour, Long> {
 }

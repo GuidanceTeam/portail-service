@@ -2,6 +2,7 @@ package intra.poleemploi.utility;
 
 import intra.poleemploi.entities.Appli;
 import intra.poleemploi.entities.Content;
+import intra.poleemploi.entities.StatistiquesParJour;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -10,128 +11,118 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ReadExcel {
 
-    public  ReadExcel() throws IOException {}
 
-    public List<Appli> getAppliList(String pathName) throws IOException {
+    public  ReadExcel() {}
+
+    private List<List<String>> readExcelFile(String pathName) throws IOException {
         // Read XSL file
         FileInputStream inputStream = new FileInputStream(new File(pathName));
-
         // Get the workbook instance for XLS file
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-
         // Get first sheet from the workbook
         XSSFSheet sheet = workbook.getSheetAt(0);
-
         // Get iterator to all the rows in current sheet
         Iterator<Row> rowIterator = sheet.iterator();
 
-
-        List<Appli> appliList = new ArrayList<>();
+        List<List<String>> listData = new ArrayList<>();
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             // Get iterator to all cells of current row
             Iterator<Cell> cellIterator = row.cellIterator();
 
-
-            Appli appli = new Appli();
-            String temp;
-            List<String> listString = new ArrayList<>();
+            List<String> listRow = new ArrayList<>();
 
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
-                listString.add(cell.getStringCellValue());
-                   // Change to getCellType() if using POI 4.x
-//                CellType cellType = cell.getCellType();
-//
-//                switch (cellType) {
-//                    case _NONE:
-//                        System.out.print("");
-//                        System.out.print("\t");
-//                        break;
-//                    case BOOLEAN:
-//                        System.out.print(cell.getBooleanCellValue());
-//                        System.out.print("\t");
-//                        break;
-//                    case BLANK:
-//                        System.out.print("");
-//                        System.out.print("\t");
-//                        break;
-//                    case FORMULA:
-//                        // Formula
-//                        System.out.print(cell.getCellFormula());
-//                        System.out.print("\t");
-//
-//                        FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-//                        // Print out value evaluated by formula
-//                        System.out.print(evaluator.evaluate(cell).getNumberValue());
-//                        break;
-//                    case NUMERIC:
-//                        System.out.print(cell.getNumericCellValue());
-//                        System.out.print("\t");
-//                        break;
-//                    case STRING:
-//                        System.out.print(cell.getStringCellValue());
-//                        System.out.print("\t");
-//                        break;
-//                    case ERROR:
-//                        System.out.print("!");
-//                        System.out.print("\t");
-//                        break;
-//                }
-//
+                listRow.add(cell.getStringCellValue());
             }
-            listString.forEach(System.out::println);
-            appli.setIdAppliKM(listString.get(0));
-            appli.setAppliName(listString.get(1));
-            appli.setURL(listString.get(2));
-            appliList.add(appli);
+            listData.add(listRow);
             //System.out.println(appliList.toString());
         }
-    return appliList;
+        return listData;
     }
 
-    public List<Content> getContentList(String pathName) throws IOException {
-        // Read XSL file
-        FileInputStream inputStream = new FileInputStream(new File(pathName));
+    public List<Appli> getAppliList() throws IOException {
+        List<List<String>> listData;
+        String PathName = "C:/demo/KnowMore/knowMore CoachedAppli.xlsx";
+        listData = readExcelFile(PathName);
 
-        // Get the workbook instance for XLS file
-        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        List<Appli> appliList = new ArrayList<>();
 
-        // Get first sheet from the workbook
-        XSSFSheet sheet = workbook.getSheetAt(0);
+        Appli  appli = new Appli();
 
-        // Get iterator to all the rows in current sheet
-        Iterator<Row> rowIterator = sheet.iterator();
-
-
-        List<Content> getListData = new ArrayList<>();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            // Get iterator to all cells of current row
-            Iterator<Cell> cellIterator = row.cellIterator();
-
-
-            Content content = new Content();
-            String temp;
-            List<String> listString = new ArrayList<>();
-
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                listString.add(cell.getStringCellValue());
-
+        for (List<String> listString: listData) {
+            if (listString.get(0) != "id") {
+                appli.setIdAppliKM(listString.get(0));
+                appli.setAppliName(listString.get(1));
+                appli.setAppliURL(listString.get(2));
+                appliList.add(appli);
             }
-            listString.forEach(System.out::println);
-            content..setIdAppliKM(listString.get(0));
-            content.setAppliName(listString.get(1));
-            content.setURL(listString.get(2));
-            getListData.add(appli);
-            //System.out.println(appliList.toString());
         }
-        return getListData;
+        return appliList;
+    }
+
+    public List<Content> getContentList() throws IOException, ParseException {
+        List<List<String>> listData;
+        String PathName = "C:/demo/KnowMore/knowMore ContentAppli.xlsx";
+        listData = readExcelFile(PathName);
+
+        List<Content> contentList = new ArrayList<>();
+
+        Content content = new Content();
+        Appli appli = new Appli();
+        for (List<String> listString: listData) {
+            if (listString.get(0) != "date") {
+                content.setId(Integer.valueOf(listString.get(0)));
+                content.setContentName(listString.get(1));
+                content.setPublished(Boolean.parseBoolean(listString.get(2)));
+                content.setDescription(listString.get(3));
+                content.setNbLectures(Integer.parseInt(listString.get(4)));
+                content.setNbAffichages(Integer.parseInt(listString.get(5)));
+                content.setIcone(listString.get(6));
+                content.setContentURL(listString.get(7));
+                content.setDebut(new SimpleDateFormat("dd/MM/yyyy").parse(listString.get(8)));
+                content.setFin(new SimpleDateFormat("dd/MM/yyyy").parse(listString.get(9)));
+                appli.setIdAppliKM(listString.get(10));
+                content.setAppli(appli);
+                contentList.add(content);
+            }
+        }
+
+        return contentList;
+    }
+
+    public List<StatistiquesParJour> getStatistiquesParJourList() throws IOException, ParseException {
+        List<List<String>> listData;
+        String PathName = "C:/demo/KnowMore/dailyStatistics_pn066_2018-10-02_2019-10-02.xls";
+        listData = readExcelFile(PathName);
+
+        List<StatistiquesParJour> statistiquesParJourList = new ArrayList<>();
+
+        StatistiquesParJour statistiquesParJour = new StatistiquesParJour();
+        Content content = new Content();
+        for (List<String> listString: listData) {
+            if (listString.get(0) != "date") {
+                statistiquesParJour.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(listString.get(0)));
+                statistiquesParJour.setNbAffichage(listString.get(1));
+                statistiquesParJour.setNbUsersAyantAffichesLaPastille(Long.valueOf(listString.get(2)));
+                statistiquesParJour.setNbDeLectureDeLaPastille(Long.valueOf(listString.get(3)));
+                statistiquesParJour.setNbUsersAyantLusLaPastille((Long.valueOf(listString.get(4))));
+                statistiquesParJour.setTempsPasseSurLaPastilleMS(Long.valueOf(listString.get(5)));
+                content.setId(Integer.valueOf(listString.get(6)));
+                statistiquesParJour.setContent(content);
+                statistiquesParJourList.add(statistiquesParJour);
+            }
+        }
+        return statistiquesParJourList;
     }
 
 }
+
+

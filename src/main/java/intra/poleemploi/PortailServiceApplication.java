@@ -2,11 +2,9 @@ package intra.poleemploi;
 
 import intra.poleemploi.dao.AppliRepository;
 import intra.poleemploi.dao.ContentRepository;
+import intra.poleemploi.dao.StatistiquesParJourRepository;
 import intra.poleemploi.dao.UserAppRepository;
-import intra.poleemploi.entities.Appli;
-import intra.poleemploi.entities.Content;
-import intra.poleemploi.entities.RoleApp;
-import intra.poleemploi.entities.UserApp;
+import intra.poleemploi.entities.*;
 import intra.poleemploi.service.AuthService;
 import intra.poleemploi.utility.ReadExcel;
 import net.bytebuddy.utility.RandomString;
@@ -24,6 +22,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 
+
 @SpringBootApplication
 public class PortailServiceApplication {
 	@Autowired
@@ -34,7 +33,7 @@ public class PortailServiceApplication {
 	}
 
 	@Bean
-	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository){
+	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, StatistiquesParJourRepository statistiquesParJourRepository, AuthService authService, UserAppRepository userAppRepository){
 		return args -> {
 			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
 			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
@@ -46,28 +45,39 @@ public class PortailServiceApplication {
 //			appliRepository.save(new Appli(4, "APP04", "AUDE Presta"));
 
 			List<Appli> listAppli = new ArrayList<>();
-			ReadExcel readListAppli = new ReadExcel();
-			listAppli = readListAppli.getAppliList("C:/demo/KnowMore/knowMore CoachedAppli.xlsx");
+			ReadExcel readExcel= new ReadExcel();
+			listAppli = readExcel.getAppliList();
 
-			for (Appli tempAppli : listAppli) {
-				if (tempAppli.getIdAppliKM() != "id")  {
-					appliRepository.save(tempAppli);
-				}
-			}
+   			for (Appli tempAppli : listAppli) {
+   				appliRepository.save(tempAppli);
+ 			}
 
 		    // parcourt et affiche les données
 			appliRepository.findAll().forEach(System.out::println);
+
 			// supprime les données contentAppli avant chaque lancement de l'appli
 			contentRepository.deleteAll();
+
             List<Content> listContent = new ArrayList<>();
-			listAppli = readListAppli.getAppliList("C:/demo/KnowMore/knowMore ContentAppli.xlsx");
+			listContent = readExcel.getContentList();
 
-			for (Appli tempAppli : listAppli) {
-				if (tempAppli. != "id")  {
-					appliRepository.save(tempAppli);
-				}
+			for (Content tempContent : listContent) {
+				contentRepository.save(tempContent);
 			}
+			// parcourt et affiche les données
+			contentRepository.findAll().forEach(System.out::println);
 
+			// supprime les données contentAppli avant chaque lancement de l'appli
+			statistiquesParJourRepository.deleteAll();
+
+			List<StatistiquesParJour> listStatistiquesParJour = new ArrayList<>();
+			listStatistiquesParJour = readExcel.getStatistiquesParJourList();
+
+			for (StatistiquesParJour  tempStempStatistiquesParJour : listStatistiquesParJour) {
+				statistiquesParJourRepository.save(tempStempStatistiquesParJour);
+						}
+			// parcourt et affiche les données
+			statistiquesParJourRepository.findAll().forEach(System.out::println);
 
 //			Random rnd = new Random();
 //			appliRepository.findAll().forEach(appli -> {
