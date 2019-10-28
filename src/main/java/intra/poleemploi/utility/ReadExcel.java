@@ -44,8 +44,8 @@ public class ReadExcel {
             //List<String> listRow = new ArrayList<>();
             Appli appli = new Appli();
             if (row.getRowNum() > 0) {
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
                     switch (cell.getColumnIndex()) {
                         case 0:
@@ -80,8 +80,8 @@ public class ReadExcel {
             //List<String> listRow = new ArrayList<>();
             Content content = new Content();
             if (row.getRowNum() > 0) {
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
                     switch (cell.getColumnIndex()) {
                         case 0:
                             content.setContentId((int) cell.getNumericCellValue());
@@ -136,7 +136,6 @@ public class ReadExcel {
         Iterator<Row> rowIterator = readExcelFile(pathName);
 
         List<StatistiquesParJour> statistiquesParJourList = new ArrayList<>();
-        StatistiquesParJour statistiquesParJour = new StatistiquesParJour();
 
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
@@ -144,8 +143,9 @@ public class ReadExcel {
             Iterator<Cell> cellIterator = row.cellIterator();
             //List<String> listRow = new ArrayList<>();
             if (row.getRowNum() > 0) {
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                StatistiquesParJour statistiquesParJour = new StatistiquesParJour();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
                     switch (cell.getColumnIndex()) {
                         case 0:
