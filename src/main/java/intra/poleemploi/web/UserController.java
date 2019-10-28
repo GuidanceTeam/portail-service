@@ -1,6 +1,7 @@
 package intra.poleemploi.web;
 
 import intra.poleemploi.dao.UserAppRepository;
+import intra.poleemploi.entities.Appli;
 import intra.poleemploi.entities.RoleApp;
 import intra.poleemploi.entities.UserApp;
 import intra.poleemploi.service.AuthService;
@@ -10,6 +11,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -31,6 +33,15 @@ public class UserController {
         UserApp userBdd = userAppRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
         userBdd.setRoles(roles);
+        ResponseEntity<UserApp> response = ResponseEntity.ok(authService.saveUserApp(userBdd));
+        return response ;
+    }
+
+    @PutMapping("/updateUserApplis/{id}")
+    public ResponseEntity<UserApp> updateUserApplis(@PathVariable(value="id") Long id, @RequestBody Set<Appli> applis) throws ResourceNotFoundException {
+        UserApp userBdd = userAppRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
+        userBdd.setApplis(applis);
         ResponseEntity<UserApp> response = ResponseEntity.ok(authService.saveUserApp(userBdd));
         return response ;
     }
