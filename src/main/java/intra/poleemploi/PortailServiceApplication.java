@@ -44,7 +44,7 @@ public class PortailServiceApplication {
 //			appliRepository.save(new Appli(3, "APP03", "MAP DE"));
 //			appliRepository.save(new Appli(4, "APP04", "AUDE Presta"));
 
-			List<Appli> listAppli = new ArrayList<>();
+			List<Appli> listAppli;
 			ReadExcel readExcel= new ReadExcel();
 			listAppli = readExcel.getAppliList();
 
@@ -59,7 +59,7 @@ public class PortailServiceApplication {
 			contentRepository.deleteAll();
 
             List<Content> listContent = new ArrayList<>();
-			listContent = readExcel.getContentList();
+			listContent = readExcel.getContentList(appliRepository.findAll());
 
 			for (Content tempContent : listContent) {
 				contentRepository.save(tempContent);
@@ -71,7 +71,7 @@ public class PortailServiceApplication {
 			statistiquesParJourRepository.deleteAll();
 
 			List<StatistiquesParJour> listStatistiquesParJour = new ArrayList<>();
-			listStatistiquesParJour = readExcel.getStatistiquesParJourList();
+			listStatistiquesParJour = readExcel.getStatistiquesParJourList(contentRepository.findAll());
 
 			for (StatistiquesParJour  tempStempStatistiquesParJour : listStatistiquesParJour) {
 				statistiquesParJourRepository.save(tempStempStatistiquesParJour);

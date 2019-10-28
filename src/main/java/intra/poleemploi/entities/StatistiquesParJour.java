@@ -6,19 +6,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-@Table(name="StatistiquesParJour")
+@Table(name="statistiquesParJour")
 public class StatistiquesParJour implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Date date;
     @Column(name="NbAffichage")
-    private String nbAffichage;
+    private Long nbAffichage;
     @Column(name="NbUsersAyantAffichesLaPastille")
     private Long nbUsersAyantAffichesLaPastille;
     @Column(name="NbDeLectureDeLaPastille")
