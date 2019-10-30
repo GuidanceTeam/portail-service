@@ -11,5 +11,5 @@ public interface AuthService {
     UserApp loadUserAppByUsername(String username);
     void addRoleToUser(String username, String roleName);
     void addAppliToUser(String username, String appliName);
-
+    void delAllAppToAllUser();
 }
