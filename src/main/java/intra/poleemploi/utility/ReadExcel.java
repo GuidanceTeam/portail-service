@@ -11,7 +11,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 public class ReadExcel {
@@ -90,7 +89,7 @@ public class ReadExcel {
                             content.setContentName(cell.getStringCellValue());
                             break;
                         case 2:
-                            content.setPublished(Boolean.valueOf(cell.getStringCellValue()));
+                            content.setPublished(Boolean.parseBoolean(cell.getStringCellValue()));
                             break;
                         case 3:
                             content.setDescription(cell.getStringCellValue());
@@ -131,7 +130,7 @@ public class ReadExcel {
         return contentList;
     }
 
-    public List<StatistiquesParJour> getStatistiquesParJourList(List<Content> contentList) throws IOException, ParseException {
+    public List<StatistiquesParJour> getStatistiquesParJourList(List<Content> contentList) throws IOException {
         String pathName = "C:/demo/KnowMore/dailyStatistics_pn066_2018-10-02_2019-10-02.xlsx";
         Iterator<Row> rowIterator = readExcelFile(pathName);
 
