@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -75,5 +78,13 @@ public class AuthServiceImpl implements AuthService {
         userApp.getApplis().add(appli);
     }
 
-
+    @Override
+    public void delAllAppToAllUser() {
+        List<UserApp> userAppList = userAppRepository.findAll();
+        Collection<Appli> appliList = new ArrayList<Appli>();
+        for (UserApp userApp : userAppList) {
+            appliList = userApp.getApplis();
+            userApp.getApplis().removeAll(appliList);
+        }
+    }
 }
