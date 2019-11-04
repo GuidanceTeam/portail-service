@@ -15,8 +15,12 @@ public class Content implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String idContentKM;
     private String contentName;
-    //private boolean published;
+    private boolean published;
+    private String typeService;
+    private Integer nbAffichages;
+    private Integer nbLectures;
     //private String description;
     //private int nbLectures;
     //private int nbUsers;

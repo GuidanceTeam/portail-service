@@ -52,7 +52,12 @@ public class PortailServiceApplication {
 				for (int i = 0; i < 5; i++) {
 					Content cnt = new Content();
 					cnt.setId(rnd.nextInt());
-					cnt.setContentName(RandomString.make(7));
+					cnt.setIdContentKM(RandomString.make(5));
+					cnt.setContentName(RandomString.make(40));
+					cnt.setPublished(rnd.nextBoolean());
+					cnt.setTypeService(RandomString.make(8));
+					cnt.setNbAffichages(rnd.nextInt(1500));
+					cnt.setNbLectures(rnd.nextInt(50));
 					cnt.setAppli(appli);
 					contentRepository.save(cnt);
 				}
