@@ -54,6 +54,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         authResult.getAuthorities().forEach(auth -> {
             roles.add(auth.getAuthority());
         });
+        // récupère un userApp et on créé le jeton pour l'userApp avec les claims souhaités
         UserApp userApp = userAppRepository.findUserByUsername(user.getUsername());
         String jwt = JWT.create()
                 .withIssuer(request.getRequestURI()) // nom de l'autorité de l'application ayant généré le token
