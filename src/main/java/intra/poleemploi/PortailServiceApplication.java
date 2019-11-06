@@ -37,11 +37,11 @@ public class PortailServiceApplication {
 			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
 			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
 			appliRepository.deleteAll();
-			// save les données coachedAppli en BDD
-			appliRepository.save(new Appli(1, "APP01", "Profil de compétences", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(2, "APP02", "MRS Digitale", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(3, "APP03", "MAP DE", new ArrayList<>(), new ArrayList<>()));
-			appliRepository.save(new Appli(4, "APP04", "AUDE Presta", new ArrayList<>(), new ArrayList<>()));
+			// save les données Appli en BDD
+			appliRepository.save(new Appli(1, "APP01", "Profil de compétences", new ArrayList<>()));
+			appliRepository.save(new Appli(2, "APP02", "MRS Digitale", new ArrayList<>()));
+			appliRepository.save(new Appli(3, "APP03", "MAP DE", new ArrayList<>()));
+			appliRepository.save(new Appli(4, "APP04", "AUDE Presta", new ArrayList<>()));
 			// parcourt et affiche les données
 			appliRepository.findAll().forEach(System.out::println);
 			// supprime les données contentAppli avant chaque lancement de l'appli
