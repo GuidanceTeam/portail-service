@@ -1,5 +1,6 @@
 package intra.poleemploi.security;
 
+import intra.poleemploi.dao.UserAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    UserAppRepository userAppRepository;
 
     // définit les utilisateurs qui ont accès à l'appli => permet de les authentifier
     @Override
@@ -49,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated();
 
         // ajout du filtre JWTAuth pour générer le token
-        http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
+        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), userAppRepository));
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
