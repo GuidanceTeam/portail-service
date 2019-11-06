@@ -30,6 +30,7 @@ public class UserApp {
     /*@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name="userapp_applis", joinColumns = @JoinColumn(name="user_app_id"), inverseJoinColumns = @JoinColumn(name="applis_id"))
     @LazyCollection(LazyCollectionOption.FALSE)*/
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name="userapp_applis", joinColumns=@JoinColumn(name="user_app_id"), inverseJoinColumns=@JoinColumn(name="applis_id"))
     private Set<Appli> applis;
 }
