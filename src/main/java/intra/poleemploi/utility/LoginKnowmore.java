@@ -61,21 +61,22 @@ public class LoginKnowmore {
 
         httpPost.setHeader("Content-type","application/x-www-form-urlencoded");
         httpPost.setHeader("Accept", "text/html,application/xhtml,application/xml;q=0.9,image/webp,image/png,*/;q=0.8,application/signed-exchange;v=b3");
-//        httpPost.setHeader("Content-type", "application/json");
-//        httpPost.setHeader("Accept-Encoding", "gzip, deflate");
-//        httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
+      //  httpPost.setHeader("Content-Length", "51");
+        httpPost.setHeader("User-Agent","Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Mobile Safari/537.36");
+        httpPost.setHeader("Accept-Encoding", "gzip, deflate");
+        httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
       //  httpPost.setHeader("Cookie",jsessionId);
     //    httpPost.setHeader("Cookie",jsessionId);
 
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
+//        List<NameValuePair> params = new ArrayList<NameValuePair>();
+//
+//        params.add(new BasicNameValuePair("name", "ipco2530"));
+//        params.add(new BasicNameValuePair("password", "Exchange91210"));
+//
+//        httpPost.setEntity(new UrlEncodedFormEntity(params));
 
-        params.add(new BasicNameValuePair("name", "ipco2530"));
-        params.add(new BasicNameValuePair("password", "Exchange91210"));
-
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
-
-        String entityData = "name=ipco2530&password=Exchange91210";
-        StringEntity entity = new StringEntity(entityData);
+        String entityData = "name=ipco2530&password=Exchange91210&Submit=Envoyer";
+        StringEntity entity = new StringEntity(entityData,"UTF8");
 
 
 //        String json = "{\"id\":1,\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
