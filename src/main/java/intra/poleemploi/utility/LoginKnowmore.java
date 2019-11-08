@@ -1,15 +1,22 @@
 package intra.poleemploi.utility;
 
 
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.hibernate.validator.internal.util.privilegedactions.GetMethod;
+
+import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -22,12 +29,21 @@ public class LoginKnowmore {
        private String jsessionId;
 
         public void get(){
+//            CloseableHttpClient http = null;
+//            CookieStore httpCookieStore = new BasicCookieStore();
+//            HttpClientBuilder builder = HttpClientBuilder.create().setDefaultCookieStore(httpCookieStore);
+//            http = builder.build();
+
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpGet httpget = new HttpGet("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/index.jsp");
 
             try {
                 CloseableHttpResponse response = httpclient.execute(httpget);
                 String responseJSON = EntityUtils.toString(response.getEntity(), "UTF8");
+                Header[] headers = response.getHeaders("Set-Cookie");
+                for (Header h : headers) {
+                    System.out.println(h.getValue().toString());
+                }
                 response.close();
                 System.out.println(responseJSON);
 
