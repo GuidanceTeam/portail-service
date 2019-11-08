@@ -41,7 +41,7 @@ public class LoginKnowmore {
             try {
                 CloseableHttpResponse response = httpclient.execute(httpget);
                 String responseJSON = EntityUtils.toString(response.getEntity(), "UTF8");
-                Header[] headers = response.getHeaders("Set-Cookie");
+                Header[] headers = response.getAllHeaders();
                 for (Header h : headers) {
                     System.out.println(h.getValue().toString());
                 }
@@ -56,13 +56,14 @@ public class LoginKnowmore {
     public void post() throws IOException {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/login.check");
+        HttpPost httpPost = new HttpPost("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/servlet/LoginCheck");
 
         httpPost.setHeader("User-Agent","application/x-www-form-urlencoded");
         httpPost.setHeader("Accept", "text/html,application/xhtml,application/xml;q=0.9,image/webp,image/png,*/;q=0.8,application/signed-exchange;v=b3");
         httpPost.setHeader("Content-type", "application/json");
         httpPost.setHeader("Accept-Encoding", "gzip, deflate");
         httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
+      //  httpPost.setHeader("Cookie",jsessionId);
     //    httpPost.setHeader("Cookie",jsessionId);
 
 //        List<NameValuePair> params = new ArrayList<NameValuePair>();
