@@ -73,9 +73,13 @@ public class LoginKnowmore {
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
 
+        String entityData = "name=ipco2530&password=Exchange91210";
+        StringEntity entity = new StringEntity(entityData);
+
+
 //        String json = "{\"id\":1,\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
 //        StringEntity entity = new StringEntity(json);
-//        httpPost.setEntity(new (entity));
+         httpPost.setEntity(entity);
 
         CloseableHttpResponse response = httpclient.execute(httpPost);
         int statusCode = response.getStatusLine().getStatusCode();
