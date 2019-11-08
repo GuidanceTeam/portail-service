@@ -66,16 +66,16 @@ public class LoginKnowmore {
       //  httpPost.setHeader("Cookie",jsessionId);
     //    httpPost.setHeader("Cookie",jsessionId);
 
-//        List<NameValuePair> params = new ArrayList<NameValuePair>();
-//
-//        params.add(new BasicNameValuePair("name", "ipco2530"));
-//        params.add(new BasicNameValuePair("password", "Exchange91210"));
-//
-//        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-        String json = "{\"id\":1,\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
-        StringEntity entity = new StringEntity(json);
-        httpPost.setEntity(entity);
+        params.add(new BasicNameValuePair("name", "ipco2530"));
+        params.add(new BasicNameValuePair("password", "Exchange91210"));
+
+        httpPost.setEntity(new UrlEncodedFormEntity(params));
+
+//        String json = "{\"id\":1,\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
+//        StringEntity entity = new StringEntity(json);
+//        httpPost.setEntity(new (entity));
 
         CloseableHttpResponse response = httpclient.execute(httpPost);
         int statusCode = response.getStatusLine().getStatusCode();
