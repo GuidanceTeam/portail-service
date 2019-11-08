@@ -40,8 +40,14 @@ public class PortailServiceApplication {
 			// save les données Appli en BDD
 			appliRepository.save(new Appli(1, "APP01", "Profil de compétences", new ArrayList<>()));
 			appliRepository.save(new Appli(2, "APP02", "MRS Digitale", new ArrayList<>()));
-			appliRepository.save(new Appli(3, "APP03", "MAP DE", new ArrayList<>()));
+			appliRepository.save(new Appli(3, "APP03", "MAP Vue DE", new ArrayList<>()));
 			appliRepository.save(new Appli(4, "APP04", "AUDE Presta", new ArrayList<>()));
+			appliRepository.save(new Appli(5, "APP05", "BPM", new ArrayList<>()));
+			appliRepository.save(new Appli(6, "APP06", "AUDE V4", new ArrayList<>()));
+			appliRepository.save(new Appli(7, "APP07", "DUNE V4", new ArrayList<>()));
+			appliRepository.save(new Appli(8, "APP08", "EverestFab", new ArrayList<>()));
+			appliRepository.save(new Appli(9, "APP09", "KairosFab", new ArrayList<>()));
+			appliRepository.save(new Appli(10, "APP10", "NG AGEPI", new ArrayList<>()));
 			// parcourt et affiche les données
 			appliRepository.findAll().forEach(System.out::println);
 			// supprime les données contentAppli avant chaque lancement de l'appli
@@ -49,7 +55,7 @@ public class PortailServiceApplication {
 
 			Random rnd = new Random();
 			appliRepository.findAll().forEach(appli -> {
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < 10; i++) {
 					Content cnt = new Content();
 					cnt.setId(rnd.nextInt());
 					cnt.setIdContentKM(RandomString.make(5));
@@ -83,9 +89,16 @@ public class PortailServiceApplication {
 			authService.addAppliToUser("user1", "MAP DE");
             authService.addAppliToUser("user1", "Profil de compétences");
             authService.addAppliToUser("user1", "AUDE Presta");
+            authService.addAppliToUser("user1", "BPM");
 			authService.addAppliToUser("user2", "MRS Digitale");
-			authService.addAppliToUser("user2", "MAP DE");
+			authService.addAppliToUser("user2", "MAP Vue DE");
+			authService.addAppliToUser("user2", "EverestFab");
 			authService.addAppliToUser("user3", "Profil de compétences");
+			authService.addAppliToUser("user4", "BPM");
+			authService.addAppliToUser("user4", "AUDE V4");
+			authService.addAppliToUser("user4", "MAP Vue DE");
+			authService.addAppliToUser("user4", "NG AGEPI");
+			authService.addAppliToUser("user4", "KairosFab");
 
 
 			userAppRepository.findAll().forEach(System.out::println);
