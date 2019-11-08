@@ -2,6 +2,7 @@ package intra.poleemploi.utility;
 
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -58,30 +59,30 @@ public class LoginKnowmore {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/servlet/LoginCheck");
 
-        httpPost.setHeader("User-Agent","application/x-www-form-urlencoded");
+        httpPost.setHeader("Content-type","application/x-www-form-urlencoded");
         httpPost.setHeader("Accept", "text/html,application/xhtml,application/xml;q=0.9,image/webp,image/png,*/;q=0.8,application/signed-exchange;v=b3");
-        httpPost.setHeader("Content-type", "application/json");
-        httpPost.setHeader("Accept-Encoding", "gzip, deflate");
-        httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
+//        httpPost.setHeader("Content-type", "application/json");
+//        httpPost.setHeader("Accept-Encoding", "gzip, deflate");
+//        httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
       //  httpPost.setHeader("Cookie",jsessionId);
     //    httpPost.setHeader("Cookie",jsessionId);
 
-//        List<NameValuePair> params = new ArrayList<NameValuePair>();
-//
-//        params.add(new BasicNameValuePair("name", "ipco2530"));
-//        params.add(new BasicNameValuePair("password", "Exchange91210"));
-//
-//        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-        String json = "{\"id\":1,\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
-        StringEntity entity = new StringEntity(json);
-        httpPost.setEntity(entity);
+        params.add(new BasicNameValuePair("name", "ipco2530"));
+        params.add(new BasicNameValuePair("password", "Exchange91210"));
+
+        httpPost.setEntity(new UrlEncodedFormEntity(params,"UTF8"));
+
+ //       String json = "{\"name\":\"ipco2530\",\"password\": \"Exchange91210\"}";
+  //      StringEntity entity = new StringEntity(json);
+   //     httpPost.setEntity(entity);
 
         CloseableHttpResponse response = httpclient.execute(httpPost);
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200)
         {
-            throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            //throw new RuntimeException("Failed with HTTP error code : " + statusCode);
         }
         String responseJSON = EntityUtils.toString(response.getEntity(), "UTF8");
         response.close();

@@ -17,7 +17,7 @@ public class ReadHtmlTableMain {
 //            System.out.println("response " + response.toString());
 
             LoginKnowmore firstCallBeforeLogin = new LoginKnowmore();
-            firstCallBeforeLogin.get();
+            //firstCallBeforeLogin.get();
             firstCallBeforeLogin.post();
         }
 
