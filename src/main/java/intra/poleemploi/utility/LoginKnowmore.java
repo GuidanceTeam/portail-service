@@ -50,7 +50,7 @@ public class LoginKnowmore {
                 for (Header h : headers) {
                     System.out.println(h.getValue().toString());
                 }
-                CookieStore cookieStore = new CookieStore()
+              //  CookieStore cookieStore = new CookieStore()
                // response.close();
                // httpclient.close();
                 System.out.println(responseJSON);
@@ -94,27 +94,40 @@ public class LoginKnowmore {
 
         HttpResponse response = httpclient.execute(httpPost);
         int statusCode = response.getStatusLine().getStatusCode();
+        String location ="";
         if (statusCode != 200)
         {
             //throw new RuntimeException("Failed with HTTP error code : " + statusCode);
         }
         if (statusCode == 302 ){
-            httpPost = new HttpPost("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/index.jsp;jsessionid=D8FC3E922F408DC70A7BF7C77AACF8D3");
-            httpPost.setHeader(HttpHeaders.ACCEPT, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/png,*/*;q=0.8,application/signed-exchange;v=b3");
-            httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
-            httpPost.setHeader("User-Agent","Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Mobile Safari/537.36");
-            httpPost.setHeader("Accept-Encoding", "gzip, deflate");
-            httpPost.setHeader("Accept-Language","fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
-            httpPost.setHeader("Upgrade-Insecure-Requests","1");
-            httpPost.setHeader("cache-control", "no-cache");
-            httpPost.setHeader("Connection","keep-alive");
-            httpPost.setHeader(HttpHeaders.COOKIE,"JSESSIONID=C9FCECECAB577D815DAA62368D339A58");
-            httpPost.setEntity(entity);
+            Header[] headers = response.getHeaders("Location");
+            location=headers[0].getValue();
+//            for (Header header : headers) {
+//                if (header.getName() == "Location") {
+//                    location = header.getValue();
+//                }
+ //           }
+            httpclient.close();
+
+
         }
+        CloseableHttpClient httpclient1 = HttpClients.createDefault();
+        HttpPost httpPost1 = new HttpPost(location);
+        httpPost1.setHeader(HttpHeaders.ACCEPT, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/png,*/*;q=0.8,application/signed-exchange;v=b3");
+        httpPost1.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
+        httpPost1.setHeader("User-Agent","Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Mobile Safari/537.36");
+        httpPost1.setHeader("Accept-Encoding", "gzip, deflate");
+        httpPost1.setHeader("Upgrade-Insecure-Requests","1");
+        httpPost1.setHeader("cache-control", "no-cache");
+        httpPost1.setHeader("Connection","keep-alive");
+
+        httpPost1.setEntity(entity);
         String responseJSON = EntityUtils.toString(response.getEntity(), "UTF8");
        // response.close();
-        System.out.println(responseJSON);
-        httpclient.close();
+        HttpResponse response1 = httpclient1.execute(httpPost1);
+        String responseJSON1 = EntityUtils.toString(response.getEntity(), "UTF8");
+        System.out.println(responseJSON1);
+        httpclient1.close();
 
         //        try {
 //            CloseableHttpResponse response = httpclient.execute(httpget);
