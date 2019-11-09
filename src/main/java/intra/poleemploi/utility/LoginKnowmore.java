@@ -50,7 +50,7 @@ public class LoginKnowmore {
                 for (Header h : headers) {
                     System.out.println(h.getValue().toString());
                 }
-                CookieStore cookieStore = new CookieStore() 
+                CookieStore cookieStore = new CookieStore()
                // response.close();
                // httpclient.close();
                 System.out.println(responseJSON);
