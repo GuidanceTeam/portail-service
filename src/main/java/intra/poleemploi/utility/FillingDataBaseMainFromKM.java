@@ -51,10 +51,11 @@ public class FillingDataBaseMainFromKM {
 
             // Table Content filling
             contentRepository.deleteAll();
+
             List<Content> listContent;
 
           //  listContent = readHtmlTable.getContentList(appliRepository.findAll());
-            listContent = loginKnowMore.get();
+            listContent = loginKnowMore.get(listAppli);
 
             for (Content tempContent : listContent) {
                 contentRepository.save(tempContent);

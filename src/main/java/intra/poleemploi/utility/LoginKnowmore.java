@@ -23,19 +23,29 @@ class LoginKnowMore {
     // http://pr051-gfpe-3upxjf0.sip91.pole-emploi.intra:22391/know/login.jsp    //prod
     // http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/index.jsp    //recette
 
-    List<Content> get() throws IOException {
+    List<Content> get(List<Appli> listAppli) throws IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpget = new HttpGet("http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/index.jsp");
-        CloseableHttpResponse response = httpclient.execute(httpget);
-        int statusCode = response.getStatusLine().getStatusCode();
-        ReadHtmlTable readHtmlTable = new ReadHtmlTable();
-        if (statusCode == 200) {
-            //A faire traitement de la réponse
-            httpclient.close();
-            String responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
-            return readHtmlTable.getContentsList(responseKM);
+        List<Content> listcontentToBeReturned = null;
+        for (Appli appli : listAppli) {
+
+            HttpGet httpget = new HttpGet(appli.getAppliURL());
+            CloseableHttpResponse response = httpclient.execute(httpget);
+            int statusCode = response.getStatusLine().getStatusCode();
+            ReadHtmlTable readHtmlTable = new ReadHtmlTable();
+            if (statusCode == 200) {
+                //A faire traitement de la réponse
+                httpclient.close();
+                String responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
+                List<Content> listContents = readHtmlTable.getContentsList(responseKM);
+                for( Content content : listContents) {
+                    listcontentToBeReturned.add(content);
+                }
+            }
+            else {throw new RuntimeException("Failed with HTTP error code : " + statusCode);}
         }
-        throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+        return listcontentToBeReturned;
+
+
 
 //        try {
 //            String responseJSON = EntityUtils.toString(response.getEntity(), "UTF8");

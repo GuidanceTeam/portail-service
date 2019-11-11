@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +16,10 @@ public class ReadHtmlTable {
 
     public List<Appli> getAppliList(String html) throws IOException {
         LoginKnowMore loginKnowMore = new LoginKnowMore();
-
-//        File html = new File("c:/demo/KnowMore/Responses/reponse liste applications.html");  //lecture fichier html
+//      File html = new File("c:/demo/KnowMore/Responses/reponse liste applications.html");  //lecture fichier html
         List<Appli> listAppli = new ArrayList<Appli>();
 
-        Document doc = Jsoup.parse(html, "UTF-8");
+        Document doc = Jsoup.parse(html);
         Element table = doc.select("table").get(0); //select the first table.
         Elements rows = table.select("tr");
         int pos = 0;
@@ -38,18 +36,17 @@ public class ReadHtmlTable {
             appli.setIdAppliKM(idApplication);
             appli.setAppliName(cols.get(0).text());
             appli.setAppliURL(urlAppli);
-            System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text() + " idApplication " + idApplication);
+            //System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text() + " idApplication " + idApplication);
             listAppli.add(appli);
         }
         return listAppli;
     }
 
     List<Content> getContentsList(String html) throws IOException {
-
         LoginKnowMore loginKnowMore = new LoginKnowMore();
         List<Content> listContent = new ArrayList<Content>();
         // File html = new File("c:/demo/KnowMore/Responses/reponse liste des contenus competence.html");
-        Document doc = Jsoup.parse(new File(html), "UTF-8", "");
+        Document doc = Jsoup.parse(html);
 
         Element table = doc.select("table").get(0); //select the first table.
         Elements rows = table.select("tr");
