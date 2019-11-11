@@ -45,6 +45,9 @@ public class ReadHtmlTable {
     }
 
     List<Content> getContentsList(String html) throws IOException {
+
+        LoginKnowMore loginKnowMore = new LoginKnowMore();
+        List<Content> listContent = new ArrayList<Content>();
         // File html = new File("c:/demo/KnowMore/Responses/reponse liste des contenus competence.html");
         Document doc = Jsoup.parse(new File(html), "UTF-8", "");
 
@@ -59,17 +62,22 @@ public class ReadHtmlTable {
 
             int posLocationHref = urlNonFiltrered.indexOf("location.href="); //recherche y compris le guillement
             String url = urlNonFiltrered.substring(posLocationHref + "location.href=\'".length(), urlNonFiltrered.length() - 1);
-
+            Content content = new Content();
             int posPubId = url.indexOf("pubId=");
             int posAmpersand = url.indexOf("&");
             String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);
 
+            content.setContentName();
+            content.setDescription();
+            content.setNbAffichages();
+            content.setNbLectures();
+            listContent.add(content);
             System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text()
                     + " col3 " + cols.get(2).text() + " col4 " + cols.get(3).text()
                     + " col5 " + cols.get(4).text() + " col6 " + cols.get(5).text()
                     + " col7 " + cols.get(6).text());
         }
-        return null;
+        return listContent;
     }
 
 
