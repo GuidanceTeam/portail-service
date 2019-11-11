@@ -2,7 +2,6 @@ package intra.poleemploi.utility;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.concurrent.CompletableFuture;
 
 public class ReadHtmlTableMain {
 
@@ -16,9 +15,9 @@ public class ReadHtmlTableMain {
 //            response = firstCallKM.firstCallBeforeLogging(firstCallBeforeLoginURL);
 //            System.out.println("response " + response.toString());
 
-            LoginKnowmore firstCallBeforeLogin = new LoginKnowmore();
-            firstCallBeforeLogin.get();
-            firstCallBeforeLogin.post();
+           // LoginKnowmore firstCallBeforeLogin = new LoginKnowmore();
+            //firstCallBeforeLogin.get();
+            //firstCallBeforeLogin.post();
         }
 
 

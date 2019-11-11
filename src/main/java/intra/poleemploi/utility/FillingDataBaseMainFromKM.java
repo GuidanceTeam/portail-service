@@ -8,27 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 
 @SpringBootApplication(scanBasePackages={"intra.poleemploi"})
-public class FillingDataBaseMain {
+public class FillingDataBaseMainFromKM {
     @Autowired
     private RepositoryRestConfiguration repositoryRestConfiguration;
     @Autowired
     private UserAppRepository userAppRepository;
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(FillingDataBaseMain.class, args);
+        ConfigurableApplicationContext ctx = SpringApplication.run(FillingDataBaseMainFromKM.class, args);
         ctx.close();
     }
 
@@ -45,8 +41,9 @@ public class FillingDataBaseMain {
 
             authService.delAllAppToAllUser();
             List<Appli> listAppli;
-            ReadExcel readExcel = new ReadExcel();
-            listAppli = readExcel.getAppliList();
+            LoginKnowMore loginKnowMore = new LoginKnowMore();
+
+            listAppli = loginKnowMore.post();                             //readHtmlTable.getAppliList();
             for (Appli tempAppli : listAppli) {
                 appliRepository.save(tempAppli);
             }
@@ -54,20 +51,23 @@ public class FillingDataBaseMain {
 
             // Table Content filling
             contentRepository.deleteAll();
-            List<Content> listContent = new ArrayList<>();
-            listContent = readExcel.getContentList(appliRepository.findAll());
+            List<Content> listContent;
+
+          //  listContent = readHtmlTable.getContentList(appliRepository.findAll());
+            listContent = loginKnowMore.get();
+
             for (Content tempContent : listContent) {
                 contentRepository.save(tempContent);
             }
             contentRepository.findAll().forEach(System.out::println);
 
-            // Table statistique par jour filling
-            statistiquesParJourRepository.deleteAll();
-            List<StatistiquesParJour> listStatistiquesParJour = new ArrayList<>();
-            listStatistiquesParJour = readExcel.getStatistiquesParJourList(contentRepository.findAll());
-            for (StatistiquesParJour tempStempStatistiquesParJour : listStatistiquesParJour) {
-                statistiquesParJourRepository.save(tempStempStatistiquesParJour);
-            }
+//            // Table statistique par jour filling
+//            statistiquesParJourRepository.deleteAll();
+//            List<StatistiquesParJour> listStatistiquesParJour = new ArrayList<>();
+//            listStatistiquesParJour = readHtmlTable.getStatistiquesParJourList(contentRepository.findAll());
+//            for (StatistiquesParJour tempStempStatistiquesParJour : listStatistiquesParJour) {
+//                statistiquesParJourRepository.save(tempStempStatistiquesParJour);
+//            }
             statistiquesParJourRepository.findAll().forEach(System.out::println);
 
             // AUTHENTICATION
