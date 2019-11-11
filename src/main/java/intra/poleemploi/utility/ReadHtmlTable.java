@@ -21,7 +21,7 @@ public class ReadHtmlTable {
 //        File html = new File("c:/demo/KnowMore/Responses/reponse liste applications.html");  //lecture fichier html
         List<Appli> listAppli = new ArrayList<Appli>();
 
-        Document doc = Jsoup.parse(new File(html), "UTF-8", "");
+        Document doc = Jsoup.parse(html, "UTF-8");
         Element table = doc.select("table").get(0); //select the first table.
         Elements rows = table.select("tr");
         int pos = 0;

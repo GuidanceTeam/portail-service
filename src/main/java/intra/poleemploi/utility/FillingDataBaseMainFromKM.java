@@ -29,7 +29,7 @@ public class FillingDataBaseMainFromKM {
     }
 
     @Bean
-    CommandLineRunner startFillingDataBase(AppliRepository appliRepository, ContentRepository contentRepository, StatistiquesParJourRepository statistiquesParJourRepository, AuthService authService, UserAppRepository userAppRepository, RoleAppRepository roleAppRepository) {
+    CommandLineRunner startFillingDataBaseKM(AppliRepository appliRepository, ContentRepository contentRepository, StatistiquesParJourRepository statistiquesParJourRepository, AuthService authService, UserAppRepository userAppRepository, RoleAppRepository roleAppRepository) {
         return args -> {
             repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, StatistiquesParJour.class, UserApp.class, RoleApp.class);
             //Table User

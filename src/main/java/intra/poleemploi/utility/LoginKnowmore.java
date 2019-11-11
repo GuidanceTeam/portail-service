@@ -4,6 +4,7 @@ package intra.poleemploi.utility;
 import intra.poleemploi.entities.Appli;
 import intra.poleemploi.entities.Content;
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -58,21 +59,17 @@ class LoginKnowMore {
 
         int statusCode = response.getStatusLine().getStatusCode();
         ReadHtmlTable readHtmlTable = new ReadHtmlTable();
-        String location = "";
+        String location;
         if (statusCode == 200) {
-            String responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
+            String responseKM = EntityUtils.toString((HttpEntity) response.getEntity().getContent(), "UTF8");
             return readHtmlTable.getAppliList(responseKM);
         }
         if (statusCode == 302) {
             Header[] headers = response.getHeaders("Location");
             location = headers[0].getValue();
-            response = httpPostResponse(location);
-            statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == 200) {
-                //A faire traitement de la réponse
-                String responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
-                return readHtmlTable.getAppliList(responseKM);
-            }
+            String responseKM = httpGetResponse(location);
+            return readHtmlTable.getAppliList(responseKM);
+
         }
         throw new RuntimeException("Failed with HTTP error code : " + statusCode);
     }
@@ -101,6 +98,34 @@ class LoginKnowMore {
         return response;
     }
 
+    String httpGetResponse(String url) throws IOException {
 
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(url);
+
+        httpGet.setHeader(HttpHeaders.ACCEPT, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/png,*/*;q=0.8,application/signed-exchange;v=b3");
+        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
+        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Mobile Safari/537.36");
+        httpGet.setHeader("Accept-Encoding", "gzip, deflate");
+        httpGet.setHeader("Accept-Language", "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7");
+        httpGet.setHeader("Upgrade-Insecure-Requests", "1");
+        httpGet.setHeader("cache-control", "no-cache");
+        httpGet.setHeader("Connection", "keep-alive");
+
+       // String entityData = "name=ipco2530&password=Exchange91210";
+        //StringEntity entity = new StringEntity(entityData, "UTF8");
+
+        //httpGet.(entity);
+
+        CloseableHttpResponse response = httpclient.execute(httpGet);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String responseKM;
+        if (statusCode == 200) {
+            responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
+        }
+        else {throw new RuntimeException("Failed with HTTP error code : " + statusCode);}
+        httpclient.close();
+        return responseKM;
+    }
 }
 
