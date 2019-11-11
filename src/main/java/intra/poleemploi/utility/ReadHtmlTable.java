@@ -67,10 +67,10 @@ public class ReadHtmlTable {
             int posAmpersand = url.indexOf("&");
             String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);
 
-            content.setContentName();
-            content.setDescription();
-            content.setNbAffichages();
-            content.setNbLectures();
+            content.setContentName( cols.get(2).text());
+            content.setDescription( cols.get(2).text());
+            content.setNbAffichages(Integer.valueOf(cols.get(2).text()));
+            content.setNbLectures(Integer.valueOf(cols.get(2).text()));
             listContent.add(content);
             System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text()
                     + " col3 " + cols.get(2).text() + " col4 " + cols.get(3).text()
