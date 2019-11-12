@@ -60,16 +60,22 @@ public class ReadHtmlTable {
             String urlNonFiltrered = onClick.get("onclick");
 
             int posLocationHref = urlNonFiltrered.indexOf("location.href="); //recherche y compris le guillement
-            String url = urlNonFiltrered.substring(posLocationHref + "location.href=\'".length(), urlNonFiltrered.length() - 1);
             Content content = new Content();
+            if (posLocationHref != -1) {
+            String url = urlNonFiltrered.substring(posLocationHref + "location.href=\'".length(), urlNonFiltrered.length() - 1);
+
             int posPubId = url.indexOf("pubId=");
             int posAmpersand = url.indexOf("&");
-            String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);
+            String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);}
 
-            content.setContentName( cols.get(2).text());
-            content.setDescription( cols.get(2).text());
-            content.setNbAffichages(Integer.valueOf(cols.get(2).text()));
-            content.setNbLectures(Integer.valueOf(cols.get(2).text()));
+            content.setContentName( cols.get(0).text());
+            if(cols.get(2).text() == "Publiée") {content.setPublished(true);}
+            else {content.setPublished(false);}
+         //   content.setTypeService = cols.get(3).text();
+            content.setDescription( cols.get(4).text());
+
+            content.setNbAffichages(Integer.valueOf(cols.get(5).text()));
+            content.setNbLectures(Integer.valueOf(cols.get(6).text()));
             listContent.add(content);
             System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text()
                     + " col3 " + cols.get(2).text() + " col4 " + cols.get(3).text()

@@ -43,21 +43,20 @@ public class FillingDataBaseMainFromKM {
             List<Appli> listAppli;
             LoginKnowMore loginKnowMore = new LoginKnowMore();
 
-            listAppli = loginKnowMore.post();                             //readHtmlTable.getAppliList();
+            listAppli = loginKnowMore.listAppli();                             //readHtmlTable.getAppliList();
             for (Appli tempAppli : listAppli) {
                 appliRepository.save(tempAppli);
             }
             appliRepository.findAll().forEach(System.out::println);
-
             // Table Content filling
             contentRepository.deleteAll();
 
-            List<Content> listContent;
+            List<Content> listContents;
 
           //  listContent = readHtmlTable.getContentList(appliRepository.findAll());
-            listContent = loginKnowMore.get(listAppli);
+            listContents = loginKnowMore.listContents(listAppli);
 
-            for (Content tempContent : listContent) {
+            for (Content tempContent : listContents) {
                 contentRepository.save(tempContent);
             }
             contentRepository.findAll().forEach(System.out::println);
