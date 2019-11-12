@@ -34,8 +34,9 @@ class LoginKnowMore {
             ReadHtmlTable readHtmlTable = new ReadHtmlTable();
             if (statusCode == 200) {
                 //A faire traitement de la réponse
+
+                String responseKM = EntityUtils.toString( response.getEntity(), "UTF8");
                 httpclient.close();
-                String responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
                 List<Content> listContents = readHtmlTable.getContentsList(responseKM);
                 for( Content content : listContents) {
                     listcontentToBeReturned.add(content);
@@ -70,14 +71,15 @@ class LoginKnowMore {
         int statusCode = response.getStatusLine().getStatusCode();
         ReadHtmlTable readHtmlTable = new ReadHtmlTable();
         String location;
+        String responseKM;
         if (statusCode == 200) {
-            String responseKM = EntityUtils.toString((HttpEntity) response.getEntity().getContent(), "UTF8");
+            responseKM = EntityUtils.toString(response.getEntity(), "UTF8");
             return readHtmlTable.getAppliList(responseKM);
         }
         if (statusCode == 302) {
             Header[] headers = response.getHeaders("Location");
             location = headers[0].getValue();
-            String responseKM = httpGetResponse(location);
+            responseKM = httpGetResponse(location);
             return readHtmlTable.getAppliList(responseKM);
 
         }

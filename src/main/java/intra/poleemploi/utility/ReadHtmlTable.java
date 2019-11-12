@@ -32,6 +32,8 @@ public class ReadHtmlTable {
             String urlAppli = urlAppliNonFiltrered.substring(16, urlAppliNonFiltrered.length() - 1);
             pos = urlAppli.indexOf("applicationId=");
             String idApplication = urlAppli.substring(pos + 14, urlAppli.length());
+           // urlAppli = "http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/"+urlAppli;
+            urlAppli = "http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/admin/statistic/?applicationId="+idApplication;
             Appli appli = new Appli();
             appli.setIdAppliKM(idApplication);
             appli.setAppliName(cols.get(0).text());
