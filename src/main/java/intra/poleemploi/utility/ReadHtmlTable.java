@@ -47,6 +47,7 @@ public class ReadHtmlTable {
     List<Content> getContentsList(String html, Appli appli) throws IOException {
         LoginKnowMore loginKnowMore = new LoginKnowMore();
         List<Content> listContent = new ArrayList<Content>();
+        int index =0;
         // File html = new File("c:/demo/KnowMore/Responses/reponse liste des contenus competence.html");
         Document doc = Jsoup.parse(html);
 
@@ -55,6 +56,7 @@ public class ReadHtmlTable {
         Elements rows = table.select("tr");
 
         for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
+            index = i;
             Element row = rows.get(i);
             Elements cols = row.select("td");
             Attributes onClick = row.attributes();
@@ -70,14 +72,14 @@ public class ReadHtmlTable {
                 String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);
             }
 
-            content.setContentName(cols.get(0).text());
+            content.setIdContentKM(cols.get(0).text());
             if (cols.get(2).text() == "Publiée") {
                 content.setPublished(true);
             } else {
                 content.setPublished(false);
             }
-            //   content.setTypeService = cols.get(3).text();
-            //content.setDescription( cols.get(4).text());
+            content.setTypeService(cols.get(3).text());
+            content.setContentName( cols.get(4).text());
 
             content.setNbAffichages(Integer.valueOf(cols.get(5).text()));
             content.setNbLectures(Integer.valueOf(cols.get(6).text()));
@@ -92,7 +94,7 @@ public class ReadHtmlTable {
         }
         catch (IndexOutOfBoundsException e ) {
             System.out.println("ReadHtmlTable.getContentsList error "+ e.getMessage()
-            + " Appli URL " + html );
+            + " index i =  " + index + " appli " + appli.getIdAppliKM() );
             return null;
         }
 

@@ -27,11 +27,15 @@ public class FillingDataBaseMainFromKM {
         ConfigurableApplicationContext ctx = SpringApplication.run(FillingDataBaseMainFromKM.class, args);
         ctx.close();
     }
+//    @Bean
+//    CommandLineRunner startFillingDataBaseKM(AppliRepository appliRepository, ContentRepository contentRepository, StatistiquesParJourRepository statistiquesParJourRepository, AuthService authService, UserAppRepository userAppRepository, RoleAppRepository roleAppRepository) {
+//        return args -> {
+//            repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, StatistiquesParJour.class, UserApp.class, RoleApp.class);
 
     @Bean
-    CommandLineRunner startFillingDataBaseKM(AppliRepository appliRepository, ContentRepository contentRepository, StatistiquesParJourRepository statistiquesParJourRepository, AuthService authService, UserAppRepository userAppRepository, RoleAppRepository roleAppRepository) {
+    CommandLineRunner startFillingDataBaseKM(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository, RoleAppRepository roleAppRepository) {
         return args -> {
-            repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, StatistiquesParJour.class, UserApp.class, RoleApp.class);
+            repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
             //Table User
             userAppRepository.deleteAll();
             //Table role
@@ -71,7 +75,7 @@ public class FillingDataBaseMainFromKM {
 //            for (StatistiquesParJour tempStempStatistiquesParJour : listStatistiquesParJour) {
 //                statistiquesParJourRepository.save(tempStempStatistiquesParJour);
 //            }
-            statistiquesParJourRepository.findAll().forEach(System.out::println);
+//            statistiquesParJourRepository.findAll().forEach(System.out::println);
 
             // AUTHENTICATION
             // ajout de 2 roles
