@@ -83,7 +83,7 @@ public class ReadExcel {
                     Cell cell = cellIterator.next();
                     switch (cell.getColumnIndex()) {
                         case 0:
-                            content.setContentId((int) cell.getNumericCellValue());
+                        //    content.setContentId((int) cell.getNumericCellValue());
                             break;
                         case 1:
                             content.setContentName(cell.getStringCellValue());
@@ -92,7 +92,7 @@ public class ReadExcel {
                             content.setPublished(Boolean.parseBoolean(cell.getStringCellValue()));
                             break;
                         case 3:
-                            content.setDescription(cell.getStringCellValue());
+                      //      content.setDescription(cell.getStringCellValue());
                             break;
                         case 4:
                             content.setNbLectures((int) cell.getNumericCellValue());
@@ -101,16 +101,16 @@ public class ReadExcel {
                             content.setNbAffichages((int) cell.getNumericCellValue());
                             break;
                         case 6:
-                            content.setIcone(cell.getStringCellValue());
+                  //          content.setIcone(cell.getStringCellValue());
                             break;
                         case 7:
-                            content.setContentURL(cell.getStringCellValue());
+                   //         content.setContentURL(cell.getStringCellValue());
                             break;
                         case 8:
-                            content.setDebut(cell.getDateCellValue());
+                           // content.setDebut(cell.getDateCellValue());
                             break;
                         case 9:
-                            content.setFin(cell.getDateCellValue());
+                         //   content.setFin(cell.getDateCellValue());
                             break;
                         case 10:
                             for (Appli appli : appliList) {
@@ -166,12 +166,12 @@ public class ReadExcel {
                             statistiquesParJour.setTempsPasseSurLaPastilleMS((long) cell.getNumericCellValue());
                             break;
                         case 6:
-                            for (Content content : contentList) {
-                                if (content.getContentId() == cell.getNumericCellValue()) {
-                                    statistiquesParJour.setContent(content);
-                                    break;
-                                }
-                            }
+                    //        for (Content content : contentList) {
+                    //            if (content.getContentId() == cell.getNumericCellValue()) {
+                    //                statistiquesParJour.setContent(content);
+                    //                break;
+                    //            }
+                    //        }
                             break;
                     }
                 }

@@ -57,7 +57,10 @@ public class FillingDataBaseMainFromKM {
             listContents = loginKnowMore.listContents(listAppli);
 
             for (Content tempContent : listContents) {
-                contentRepository.save(tempContent);
+                try {
+                    contentRepository.save(tempContent);
+                }
+                catch (Exception e) {System.out.println("error FillingDataBaseMainMenuFromKM "+ e.getMessage() + e.getStackTrace());}
             }
             contentRepository.findAll().forEach(System.out::println);
 
@@ -91,6 +94,8 @@ public class FillingDataBaseMainFromKM {
             authService.addAppliToUser("user2", "MAP Vue DE");
             authService.addAppliToUser("user3", "Profil de compétences");
             userAppRepository.findAll().forEach(System.out::println);
+            appliRepository.findAll().forEach(System.out::println);
+            contentRepository.findAll().forEach(System.out::println);
         };
     }
 

@@ -44,12 +44,13 @@ public class ReadHtmlTable {
         return listAppli;
     }
 
-    List<Content> getContentsList(String html) throws IOException {
+    List<Content> getContentsList(String html, Appli appli) throws IOException {
         LoginKnowMore loginKnowMore = new LoginKnowMore();
         List<Content> listContent = new ArrayList<Content>();
         // File html = new File("c:/demo/KnowMore/Responses/reponse liste des contenus competence.html");
         Document doc = Jsoup.parse(html);
 
+        try {
         Element table = doc.select("table").get(0); //select the first table.
         Elements rows = table.select("tr");
 
@@ -62,26 +63,39 @@ public class ReadHtmlTable {
             int posLocationHref = urlNonFiltrered.indexOf("location.href="); //recherche y compris le guillement
             Content content = new Content();
             if (posLocationHref != -1) {
-            String url = urlNonFiltrered.substring(posLocationHref + "location.href=\'".length(), urlNonFiltrered.length() - 1);
+                String url = urlNonFiltrered.substring(posLocationHref + "location.href=\'".length(), urlNonFiltrered.length() - 1);
 
-            int posPubId = url.indexOf("pubId=");
-            int posAmpersand = url.indexOf("&");
-            String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);}
+                int posPubId = url.indexOf("pubId=");
+                int posAmpersand = url.indexOf("&");
+                String idContent = url.substring(posPubId + "pubId=".length(), posAmpersand);
+            }
 
-            content.setContentName( cols.get(0).text());
-            if(cols.get(2).text() == "Publiée") {content.setPublished(true);}
-            else {content.setPublished(false);}
-         //   content.setTypeService = cols.get(3).text();
-            content.setDescription( cols.get(4).text());
+            content.setContentName(cols.get(0).text());
+            if (cols.get(2).text() == "Publiée") {
+                content.setPublished(true);
+            } else {
+                content.setPublished(false);
+            }
+            //   content.setTypeService = cols.get(3).text();
+            //content.setDescription( cols.get(4).text());
 
             content.setNbAffichages(Integer.valueOf(cols.get(5).text()));
             content.setNbLectures(Integer.valueOf(cols.get(6).text()));
+            content.setAppli(appli);
             listContent.add(content);
             System.out.println("col1 " + cols.get(0).text() + " col2 " + cols.get(1).text()
                     + " col3 " + cols.get(2).text() + " col4 " + cols.get(3).text()
                     + " col5 " + cols.get(4).text() + " col6 " + cols.get(5).text()
                     + " col7 " + cols.get(6).text());
         }
+
+        }
+        catch (IndexOutOfBoundsException e ) {
+            System.out.println("ReadHtmlTable.getContentsList error "+ e.getMessage()
+            + " Appli URL " + html );
+            return null;
+        }
+
         return listContent;
     }
 

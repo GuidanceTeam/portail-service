@@ -43,8 +43,13 @@ class LoginKnowMore {
             ReadHtmlTable readHtmlTable = new ReadHtmlTable();
             statisticURL = statisticBaseURL + appli.getIdAppliKM();
             response = httpGetListContent(statisticURL);
-            List<Content> listContents = readHtmlTable.getContentsList(response);
-            listcontentToBeReturned.addAll(listContents);
+            List<Content> listContents = readHtmlTable.getContentsList(response,appli);
+            try {
+                listcontentToBeReturned.addAll(listContents);
+            }
+            catch ( Exception e) {
+                System.out.println(" LoginKnowmore.listContents error  " + e.getMessage());
+            }
         }
         return listcontentToBeReturned;
     }

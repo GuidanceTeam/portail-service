@@ -15,18 +15,19 @@ public class Content implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer contentId;
+    private Integer idContentKM;
     private String contentName;
     private boolean published;
-    private String description;
-    @Column(name="NbLectures")
-    private int nbLectures;
-    @Column(name="NbAffichages")
+    private  String typeService;
+    //  @Column(name="NbAffichages")
     private int nbAffichages;
-    private String icone;
-    private String contentURL;
-    private Date debut;
-    private Date fin;
+    //  @Column(name="NbLectures")
+    private int nbLectures;
+    //private String description;
+    //private String icone;
+    //private String contentURL;
+    //private Date debut;
+    //private Date fin;
     @ManyToOne
     @JoinColumn(name = "id_appli", nullable = false)
     private Appli appli;
