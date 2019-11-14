@@ -1,18 +1,21 @@
 package intra.poleemploi.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-@Data
-public class Email {
+public class FeedbackEmail {
+    @NotNull
     private String name;
-    private String email;
-    private String subject;
-    private String textMessage;
 
-    public Email() {
-    }
+    @NotNull
+    @Email
+    private String email;
+    //private String subject;
+
+    @NotNull
+    @Min(10)
+    private String textMessage;
 
     public String getName() {
         return name;
@@ -28,14 +31,6 @@ public class Email {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     public String getTextMessage() {
