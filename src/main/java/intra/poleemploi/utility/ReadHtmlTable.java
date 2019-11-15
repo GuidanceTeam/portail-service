@@ -73,7 +73,7 @@ public class ReadHtmlTable {
             }
 
             content.setIdContentKM(cols.get(0).text());
-            if (cols.get(2).text() == "Publiée") {
+            if (cols.get(2).text().equals("Publiée")) {
                 content.setPublished(true);
             } else {
                 content.setPublished(false);
