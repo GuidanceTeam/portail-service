@@ -35,9 +35,9 @@ public class PortailServiceApplication {
 	@Bean
 	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository){
 		return args -> {
-			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
-			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
-			appliRepository.deleteAll();
+//			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
+//			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
+//			appliRepository.deleteAll();
 			// save les données coachedAppli en BDD
 //			appliRepository.save(new Appli(1, "APP01", "Profil de compétences"));
 //			appliRepository.save(new Appli(2, "APP02", "MRS Digitale"));
@@ -53,7 +53,7 @@ public class PortailServiceApplication {
 // 			}
 
 		    // parcourt et affiche les données
-			appliRepository.findAll().forEach(System.out::println);
+//			appliRepository.findAll().forEach(System.out::println);
 
 			// supprime les données contentAppli avant chaque lancement de l'appli
 //			contentRepository.deleteAll();
@@ -95,27 +95,27 @@ public class PortailServiceApplication {
 
 			// AUTHENTICATION
 			// ajout de 2 roles
-			authService.saveRoleApp(new RoleApp(null, "USER"));
-			authService.saveRoleApp(new RoleApp(null, "ADMIN"));
+//			authService.saveRoleApp(new RoleApp(null, "USER"));
+//			authService.saveRoleApp(new RoleApp(null, "ADMIN"));
 
 			// ajout users
-			Stream.of("user1", "user2", "user3", "user4", "admin").forEach(username -> {
-				authService.saveUserApp(username, "1234", "1234");
-			});
-
+//			Stream.of("user1", "user2", "user3", "user4", "admin").forEach(username -> {
+//				authService.saveUserApp(username, "1234", "1234");
+//			});
+//
 			// ajout role ADMIN a l'admin
-			authService.addRoleToUser("admin", "ADMIN");
+//			authService.addRoleToUser("admin", "ADMIN");
 
             // ajout appli à user
-			authService.addAppliToUser("user1", "MAP DE");
-            authService.addAppliToUser("user1", "Profil de compétences");
-            authService.addAppliToUser("user1", "AUDE Presta");
-			authService.addAppliToUser("user2", "MRS Digitale");
-			authService.addAppliToUser("user2", "MAP DE");
-			authService.addAppliToUser("user3", "Profil de compétences");
-
-
-			userAppRepository.findAll().forEach(System.out::println);
+//			authService.addAppliToUser("user1", "MAP DE");
+//            authService.addAppliToUser("user1", "Profil de compétences");
+//            authService.addAppliToUser("user1", "AUDE Presta");
+//			authService.addAppliToUser("user2", "MRS Digitale");
+//			authService.addAppliToUser("user2", "MAP DE");
+//			authService.addAppliToUser("user3", "Profil de compétences");
+//
+//
+//			userAppRepository.findAll().forEach(System.out::println);
 		};
 	}
 	// créer BCryptPasswordEncoder au démarrage de l'appli pour injection dans couche Service

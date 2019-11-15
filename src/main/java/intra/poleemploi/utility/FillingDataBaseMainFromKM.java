@@ -38,12 +38,18 @@ public class FillingDataBaseMainFromKM {
             repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
             //Table User
             userAppRepository.deleteAll();
+            //Table Service auth
+            authService.delAllAppToAllUser();
             //Table role
             roleAppRepository.deleteAll();
+            //Table Content
+            contentRepository.deleteAll();
+
+
             //Table Appli filling
             appliRepository.deleteAll();
 
-            authService.delAllAppToAllUser();
+
             List<Appli> listAppli;
             LoginKnowMore loginKnowMore = new LoginKnowMore();
 
