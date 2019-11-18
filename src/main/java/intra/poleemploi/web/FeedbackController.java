@@ -1,4 +1,4 @@
-package intra.poleemploi.web;
+/*package intra.poleemploi.web;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
@@ -43,21 +43,23 @@ public class FeedbackController {
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", feedbackEmail.getEmail())
-                                        .put("Name", "Me"))
+//                                      .put("Email", feedbackEmail.getEmail())
+                                        .put("Email", "sandrine.rodriguez@hotmail.com")
+                                        .put("Name", "sandrine"))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
-                                                .put("Email", "sandrine.rodriguez@hotmail.com")
-                                                .put("Name", "You")))
+                                        .put("Email", "sandrine.rodriguez@hotmail.com")
+                                        .put("Name", "sandrine")))
                                 .put(Emailv31.Message.SUBJECT, "My first Mailjet Email!")
                                 .put(Emailv31.Message.TEXTPART, "Greetings from Mailjet!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")
+                                .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
         response = client.post(request);
 
         System.out.println(response.getStatus());
         System.out.println(response.getData());
 
-      /*  // créé un expediteur du mail
+      *//*  // créé un expediteur du mail
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(this.emailConfig.getHost());
         mailSender.setPort(this.emailConfig.getPort());
@@ -72,15 +74,13 @@ public class FeedbackController {
         mailMessage.setText(feedbackEmail.getTextMessage());
 
         // send mail
-        mailSender.send(mailMessage);*/
+        mailSender.send(mailMessage);*//*
     }
 
+    *//*@Autowired
+    private EmailService emailService;*//*
 
-
-    /*@Autowired
-    private EmailService emailService;*/
-
-    /*@PostMapping(path = "/email", produces = MediaType.APPLICATION_JSON_VALUE)
+    *//*@PostMapping(path = "/email", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Email> envoyerEmail(@RequestBody Email email) {
         try {
             emailService.sendEmail(email);
@@ -88,8 +88,8 @@ public class FeedbackController {
         } catch(MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
-    /*@PostMapping(path = "/contact", consumes = MediaType.ALL_VALUE)
+    }*//*
+    *//*@PostMapping(path = "/contact", consumes = MediaType.ALL_VALUE)
     public FeedbackEmail envoyerEmail(@RequestParam(required=false, name="subject") String subject,
                                       @RequestParam(required=false, name="textMessage") String textMessage,
                                       @RequestParam(required=false, name="email") String email,
@@ -108,5 +108,59 @@ public class FeedbackController {
         }
 //        return "redirect:/contact";
         return emailUser;
-    }*/
+    }*//*
+}*/
+
+package intra.poleemploi.web;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.resource.Emailv31;
+import intra.poleemploi.entities.FeedbackEmail;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.ValidationException;
+
+@RestController
+@RequestMapping("/contact")
+public class FeedbackController {
+    @PostMapping
+    public void sendFeedBackEmail(@RequestBody FeedbackEmail feedbackEmail, BindingResult bindingResult) throws MailjetSocketTimeoutException, MailjetException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("FeedbackEmail is not valid");
+        }
+
+        MailjetClient client;
+        MailjetRequest request;
+        MailjetResponse response;
+        client = new MailjetClient("83185c061a35ce637884721bf4525538", "70ee763f47fe5905c14b84948dc6e3b1", new ClientOptions("v3.1"));
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", feedbackEmail.getEmail())
+                                        .put("Name", feedbackEmail.getName()))
+                                .put(Emailv31.Message.TO, new JSONArray()
+                                        .put(new JSONObject()
+                                                .put("Email", "sandrine.rodriguez@hotmail.com")
+                                                .put("Name", "sandrine")))
+                                .put(Emailv31.Message.SUBJECT, "Coucou")
+                                //.put(Emailv31.Message.TEXTPART, "My first Mailjet email")
+                                .put(Emailv31.Message.TEXTPART, feedbackEmail.getTextMessage())));
+                                //.put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!")
+                                //.put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+    }
 }
+
