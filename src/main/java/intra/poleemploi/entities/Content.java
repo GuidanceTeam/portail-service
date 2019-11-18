@@ -31,4 +31,8 @@ public class Content implements Serializable{
     @ManyToOne
     @JoinColumn(name = "id_appli", nullable = false)
     private Appli appli;
+
+    public Object getPublished() {
+        return published;
+    }
 }

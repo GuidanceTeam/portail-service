@@ -36,8 +36,8 @@ class LoginKnowMore {
         String statisticBaseURL = "http://kmore-gfpe-fkqt507.sii24.pole-emploi.intra:15071/know/admin/statistic/?applicationId=";
         String statisticURL;
 
-        String location = null;
-        String response = null;
+      //  String location = null;
+        String response;
 
         for (Appli appli : listAppli) {
             ReadHtmlTable readHtmlTable = new ReadHtmlTable();
@@ -106,7 +106,7 @@ class LoginKnowMore {
         throw new RuntimeException("Failed with HTTP error code : " + statusCode);
     }
 
-    String httpGetListAppli(String url) throws IOException {
+    private String httpGetListAppli(String url) throws IOException {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url);
