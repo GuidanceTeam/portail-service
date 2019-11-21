@@ -29,7 +29,6 @@ public class PortailServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PortailServiceApplication.class, args);
-
 	}
 
 	@Bean

@@ -54,16 +54,6 @@ public class UserController {
         }
         return ResponseEntity.ok(authService.saveUserApp(userBdd));
     }
-
-    /*@GetMapping(value = "/adminUsers/{username}")
-    public UserApp userAppByUsername(@PathVariable(name="username") String username){
-        return userAppRepository.findUserByUsername(username);
-    };*/
-
-    /*@GetMapping(value = "/getUserById/{id}")
-    public UserApp getUserById(@PathVariable(name="id") Long id){
-        return userAppRepository.findUserById(id);
-    };*/
 }
 @Data
 class UserForm {
