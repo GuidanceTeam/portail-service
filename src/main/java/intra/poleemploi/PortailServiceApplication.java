@@ -2,12 +2,10 @@ package intra.poleemploi;
 
 import intra.poleemploi.dao.AppliRepository;
 import intra.poleemploi.dao.ContentRepository;
-//import intra.poleemploi.dao.StatistiquesParJourRepository;
+import intra.poleemploi.dao.StatistiquesParJourRepository;
 import intra.poleemploi.dao.UserAppRepository;
 import intra.poleemploi.entities.*;
 import intra.poleemploi.service.AuthService;
-//import intra.poleemploi.utility.ReadExcel;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,10 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
+
+//import intra.poleemploi.dao.StatistiquesParJourRepository;
+//import intra.poleemploi.utility.ReadExcel;
 
 
 
@@ -33,16 +31,18 @@ public class PortailServiceApplication {
 	}
 
 	@Bean
-	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository){
+	CommandLineRunner start(AppliRepository appliRepository, ContentRepository contentRepository, AuthService authService, UserAppRepository userAppRepository, StatistiquesParJourRepository statistiquesParJourRepository){
 		return args -> {
-//			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class);
+			repositoryRestConfiguration.exposeIdsFor(Appli.class, Content.class, UserApp.class, RoleApp.class, StatistiquesParJour.class);
 //			// A VIRER => supprime les données Appli avant chaque lancement de l'appli
-//			appliRepository.deleteAll();
+		    statistiquesParJourRepository.deleteAll();
+			contentRepository.deleteAll();
+			appliRepository.deleteAll();
 			// save les données coachedAppli en BDD
-//			appliRepository.save(new Appli(1, "APP01", "Profil de compétences"));
-//			appliRepository.save(new Appli(2, "APP02", "MRS Digitale"));
-//			appliRepository.save(new Appli(3, "APP03", "MAP DE"));
-//			appliRepository.save(new Appli(4, "APP04", "AUDE Presta"));
+			appliRepository.saveAndFlush(new Appli(1, "APP01", "Profil de compétences","url1"));
+			appliRepository.saveAndFlush(new Appli(2, "APP02", "MRS Digitale","url2"));
+			appliRepository.saveAndFlush(new Appli(3, "APP03", "MAP DE","url3"));
+			appliRepository.saveAndFlush(new Appli(4, "APP04", "AUDE Presta","url4"));
 
 //			List<Appli> listAppli;
 //			ReadExcel readExcel= new ReadExcel();
@@ -53,12 +53,50 @@ public class PortailServiceApplication {
 // 			}
 
 		    // parcourt et affiche les données
-//			appliRepository.findAll().forEach(System.out::println);
+		//	appliRepository.findAll().forEach(System.out::println);
+			List<Appli> listAppli =  appliRepository.findAll();
 
 			// supprime les données contentAppli avant chaque lancement de l'appli
-//			contentRepository.deleteAll();
-//
-//            List<Content> listContent = new ArrayList<>();
+
+
+			contentRepository.save(new Content("c1","C1 name",listAppli.get(0)));
+			contentRepository.save(new Content("c2","C2 name",listAppli.get(0)));
+			contentRepository.save(new Content("c3","C3 name",listAppli.get(0)));
+			contentRepository.save(new Content("c1","C1 name",listAppli.get(1)));
+			contentRepository.save(new Content("c2","C2 name",listAppli.get(1)));
+
+			//contentRepository.findAll().forEach(System.out::println);
+
+			List<Content> contentList = contentRepository.findAll();
+
+			statistiquesParJourRepository.save(new StatistiquesParJour("01/01/2019",contentList.get(0)));
+			statistiquesParJourRepository.save(new StatistiquesParJour("02/01/2019",contentList.get(0)));
+			statistiquesParJourRepository.save(new StatistiquesParJour("03/01/2019",contentList.get(0)));
+
+			List<StatistiquesParJour> statistiquesParJourList = statistiquesParJourRepository.findAll();
+
+			for (Appli appli : listAppli) {
+				System.out.println( appli.toString());
+				//int appliId = appli.getId();
+				for (Content content : contentList) {
+					//int contentAppliId = content.getAppli().getId();
+					if (appli.equals(content.getAppli())) {
+						//int contentId = content.getId();
+						System.out.println("     " + content.toString());
+						for (StatistiquesParJour statistiquesParJour : statistiquesParJourList) {
+						//	int statContentId = statistiquesParJour.getContent().getId();
+							if(statistiquesParJour.getContent().equals(content))
+							System.out.println("              " + statistiquesParJour.toString());
+					}
+
+					}
+				}
+			}
+         System.out.println("fin");
+		//	statistiquesParJourRepository.findAll().forEach(System.out::println);
+
+			//List<StatistiquesParJour> statistiquesParJourList = statistiquesParJourRepository.findAll();
+			//            List<Content> listContent = new ArrayList<>();
 //			listContent = readExcel.getContentList(appliRepository.findAll());
 //
 //			for (Content tempContent : listContent) {
