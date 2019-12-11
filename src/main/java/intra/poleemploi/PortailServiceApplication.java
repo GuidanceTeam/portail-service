@@ -101,7 +101,8 @@ public class PortailServiceApplication {
 			authService.addAppliToUser("user4", "KairosFab");
 
 
-			userAppRepository.findAll().forEach(System.out::println); */
+			userAppRepository.findAll().forEach(System.out::println);*/
+			
 		};
 	}
 	// créer BCryptPasswordEncoder au démarrage de l'appli pour injection dans couche Service
