@@ -38,8 +38,9 @@ public class UserController {
         UserApp userBdd = userAppRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
         userBdd.setRoles(roles);
-        ResponseEntity<UserApp> response = ResponseEntity.ok(authService.saveUserApp(userBdd));
-        return response ;
+        // ResponseEntity<UserApp> response;
+        return ResponseEntity.ok(authService.saveUserApp(userBdd));
+        // return response ;
     }
 
     @PutMapping("/updateUserApplis/{id}")
