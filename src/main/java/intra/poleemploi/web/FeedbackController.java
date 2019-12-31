@@ -129,8 +129,8 @@ import javax.validation.ValidationException;
 
 @RestController
 @RequestMapping("/contact")
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://guidance-stats.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "https://guidance-stats.herokuapp.com")
 public class FeedbackController {
     @PostMapping
     public void sendFeedBackEmail(@RequestBody FeedbackEmail feedbackEmail, BindingResult bindingResult) throws MailjetSocketTimeoutException, MailjetException {
