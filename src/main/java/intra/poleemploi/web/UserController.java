@@ -19,7 +19,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://guidance-stats.herokuapp.com")
 public class UserController {
     @Autowired
     private AuthService authService;
