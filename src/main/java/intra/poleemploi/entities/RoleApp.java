@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 @Table(name="role")
-public class RoleApp {
+public class RoleApp implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

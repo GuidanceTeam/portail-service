@@ -9,6 +9,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 @Table(name="userapp")
-public class UserApp {
+public class UserApp implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
