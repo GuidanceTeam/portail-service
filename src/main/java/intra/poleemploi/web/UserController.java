@@ -18,9 +18,10 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/")
+//@RequestMapping("/")
 //@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://guidance-stats.herokuapp.com")
+//@CrossOrigin(origins = "https://guidance-stats.herokuapp.com")
+@CrossOrigin("*")
 public class UserController {
     @Autowired
     private AuthService authService;
@@ -29,12 +30,12 @@ public class UserController {
     @Autowired
     private AppliRepository appliRepository;
 
-    @PostMapping("/adminUsers")
+    @PostMapping(value = "/adminUsers")
     public UserApp register(@RequestBody UserForm userForm){ // données envoyées au format JSON
         return authService.saveUserApp(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
 
-    @PutMapping("/updateUserRoles/{id}")
+    @PutMapping(value = "/updateUserRoles/{id}")
     public ResponseEntity<UserApp> updateUserRoles(@PathVariable(value="id") Long id, @RequestBody List<RoleApp> roles) throws ResourceNotFoundException {
         UserApp userBdd = userAppRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
@@ -44,7 +45,7 @@ public class UserController {
         // return response ;
     }
 
-    @PutMapping("/updateUserApplis/{id}")
+    @PutMapping(value = "/updateUserApplis/{id}")
     public ResponseEntity<UserApp> updateUserApplis(@PathVariable(value="id") Long id, @RequestBody Set<Appli> applis) throws ResourceNotFoundException {
         UserApp userBdd = userAppRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
